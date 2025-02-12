@@ -15,7 +15,36 @@
 
 #[cfg(test)]
 mod tests {
-    use super::Power;
+
+    pub trait Power<Exponent = Self> {
+        type Output;
+    
+        fn power(&self, n: Exponent) -> Self::Output;
+    }
+    
+    impl Power<u16> for u32 {
+        type Output = u32;
+    
+        fn power(&self, n: u16) -> Self::Output {
+            self.pow(n.into())
+        }
+    }
+    
+    impl Power<&u32> for u32 {
+        type Output = u32;
+    
+        fn power(&self, n: &u32) -> Self::Output {
+            self.power(*n)
+        }
+    }
+    
+    impl Power<u32> for u32 {
+        type Output = u32;
+    
+        fn power(&self, n: u32) -> Self::Output {
+            self.pow(n)
+        }
+    }
 
     #[test]
     fn test_power_u16() {
