@@ -5,8 +5,8 @@
 //
 // You also need to add a `get` method that takes as input a `TicketId`
 // and returns an `Option<&Ticket>`.
-
 use ticket_fields::{TicketDescription, TicketTitle};
+
 
 #[derive(Clone)]
 pub struct TicketStore {
@@ -43,9 +43,22 @@ impl TicketStore {
             tickets: Vec::new(),
         }
     }
+    
+    pub fn add_ticket(&mut self, ticket: TicketDraft) -> TicketId {
 
-    pub fn add_ticket(&mut self, ticket: Ticket) {
-        self.tickets.push(ticket);
+        let id: TicketId = TicketId(rand::random());
+        
+        self.tickets.push(Ticket {
+            id,
+            title: ticket.title,
+            description: ticket.description,
+            status: Status::ToDo,
+        });
+        id
+    }
+
+    pub fn get(&self, id: TicketId) -> Option<&Ticket> {
+        self.tickets.iter().find(|x| x.id == id)
     }
 }
 

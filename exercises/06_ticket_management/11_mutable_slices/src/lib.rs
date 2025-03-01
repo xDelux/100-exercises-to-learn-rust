@@ -5,6 +5,12 @@
 mod tests {
     use super::*;
 
+    fn squared(slice: &mut [i32]) {
+        for x in slice.iter_mut() {
+            *x *= *x;
+        }
+    }
+
     #[test]
     fn empty() {
         let mut s = vec![];
